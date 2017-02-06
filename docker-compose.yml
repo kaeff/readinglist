@@ -1,0 +1,23 @@
+version: '2'
+services:
+  web:
+    build: ./readlists
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./readlists:/myapp
+    env_file: rails.env
+    depends_on:
+      - db
+      - scraper
+      #- calibre
+  scraper:
+    build: ./scraper
+    ports:
+      - "3001:3000"
+
+  calibre:
+    image: denouche/node-calibre-api
+
+  db:
+    image: postgres
