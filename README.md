@@ -18,9 +18,16 @@ Idea is to hack a PoC re-using as much as possible:
 
 ## Starting the app
 
-``
+Generate a rails secret token:
+```
+echo "SECRET_KEY_BASE=`rails secret`" >> rails.env
+```
+
+
+Start the app:
+```
 docker-compose up -d
-``
+```
 The app is running on port 3000.
 
 ## ToDo
