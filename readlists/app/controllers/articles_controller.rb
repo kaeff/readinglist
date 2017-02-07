@@ -1,4 +1,5 @@
 require 'json'
+require 'net/http/post/multipart'
 
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
@@ -12,6 +13,11 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+    respond_to do |format|
+      format.html { @article }
+      format.epub { send_data ebook_convert(:epub), filename: "#{@article.slug}.epub", type: "application/epub+zip" }
+      format.mobi { send_data ebook_convert(:mobi), filename: "#{@article.slug}.mobi", type: "application/x-mobipocket-ebook" }
+    end
   end
 
   # GET /articles/new
@@ -26,7 +32,6 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
-
     @article = Article.new(article_params)
     response  = RestClient.get 'http://scraper:3000/api/get', {params: {url: @article.url}}
     scraped_article = JSON.parse(response.body)
@@ -76,16 +81,26 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+    def ebook_convert(format)
+      file = render_to_string("show", formats: [:html])
+      puts file
+      url = URI.parse('http://calibre:3000/calibre/ebook-convert')
+      req = Net::HTTP::Post::Multipart.new url.path,
+        file: UploadIO.new(StringIO.new(file), "application/html", "article.html"),
+        to: format
+      res = Net::HTTP.start(url.host, url.port) do |http|
+          http.request(req)
+      end
+      res.body
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_article
       @article = Article.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def article_create_params
-      params.require(:article).permit(:title, :byline, :excerpt, :readerable, :scraped_at, :content_html)
-    end
-
     def article_params
       params.require(:article).permit(:url, :title, :byline, :excerpt, :readerable, :scraped_at, :content_html)
     end

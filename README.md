@@ -34,7 +34,7 @@ The app is running on port 3000.
 
 * [x] Basic dev setup
 * [x] Scrape article
-* [ ] Ebook conversion
+* [x] Ebook conversion
 * [ ] Send to kindle
 * [ ] Curate articles in lists
 * [ ] UI

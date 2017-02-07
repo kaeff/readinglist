@@ -21,8 +21,11 @@
         <td><%= article.readerable %></td>
         <td><%= article.scraped_at %></td>
         <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Edit', article_path(article) %></td>
         <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Download as epub', article_path(article, format: :epub)  %></td>
+        <td><%= link_to 'Download as mobi', article_path(article, format: :mobi)  %></td>
       </tr>
     <% end %>
   </tbody>

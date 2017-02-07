@@ -3,4 +3,8 @@ class Article < ApplicationRecord
     @url = url.strip
     super
   end
+
+  def slug
+    "#{title.parameterize}-#{id}"
+  end
 end

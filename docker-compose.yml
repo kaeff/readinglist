@@ -18,6 +18,8 @@ services:
 
   calibre:
     image: denouche/node-calibre-api
+    ports:
+      - "3002:3000"
 
   db:
     image: postgres
