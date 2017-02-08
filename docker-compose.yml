@@ -3,23 +3,16 @@ services:
   web:
     build: ./readlists
     ports:
-      - "3000:3000"
-    volumes:
-      - ./readlists:/myapp
-    env_file: rails.env
+      - "80:3000"
     depends_on:
       - db
       - scraper
-      #- calibre
+      - calibre
   scraper:
     build: ./scraper
-    ports:
-      - "3001:3000"
 
   calibre:
     image: denouche/node-calibre-api
-    ports:
-      - "3002:3000"
 
   db:
     image: postgres
