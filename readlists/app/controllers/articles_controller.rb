@@ -33,9 +33,8 @@ class ArticlesController < ApplicationController
   # POST /articles.json
   def create
     @article = Article.new(article_params)
-    response  = RestClient.get 'http://scraper:3000/api/get', {params: {url: @article.url}}
+    response  = RestClient.get 'http://scraper:3000/api/get', { params: { url: @article.url } }
     scraped_article = JSON.parse(response.body)
-    puts scraped_article
     @article.update({
       :title => scraped_article['title'],
       :byline => scraped_article['byline'],

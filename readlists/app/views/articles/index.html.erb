@@ -9,7 +9,7 @@
       <th>Url</th>
       <th>Readerable</th>
       <th>Scraped at</th>
-      <th colspan="3"></th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
@@ -22,7 +22,6 @@
         <td><%= article.scraped_at %></td>
         <td><%= link_to 'Show', article %></td>
         <td><%= link_to 'Edit', article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= link_to 'Download as epub', article_path(article, format: :epub)  %></td>
         <td><%= link_to 'Download as mobi', article_path(article, format: :mobi)  %></td>
