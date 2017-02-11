@@ -15,8 +15,8 @@ class ArticlesController < ApplicationController
   def show
     respond_to do |format|
       format.html { render locals: { article: article }
-      format.epub { send_data ebook_convert(:epub), filename: "#{@article.slug}.epub", type: "application/epub+zip" }
-      format.mobi { send_data ebook_convert(:mobi), filename: "#{@article.slug}.mobi", type: "application/x-mobipocket-ebook" }
+      format.epub { send_ebook(@article, :epub, filename: "#{@article.slug}.epub" }
+      format.mobi { send_ebook(@article, :mobi, filename: "#{@article.slug}.mobi" }
     end
   end
 
@@ -80,19 +80,6 @@ class ArticlesController < ApplicationController
   end
 
   private
-
-    def ebook_convert(format)
-      file = render_to_string("show", formats: [:html])
-      puts file
-      url = URI.parse('http://calibre:3000/calibre/ebook-convert')
-      req = Net::HTTP::Post::Multipart.new url.path,
-        file: UploadIO.new(StringIO.new(file), "application/html", "article.html"),
-        to: format
-      res = Net::HTTP.start(url.host, url.port) do |http|
-          http.request(req)
-      end
-      res.body
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_article
