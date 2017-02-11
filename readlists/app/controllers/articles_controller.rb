@@ -41,7 +41,7 @@ class ArticlesController < ApplicationController
       :excerpt => scraped_article['excerpt'],
       :content_html => scraped_article['content'],
       :readerable => scraped_article['readerable'],
-      :scraped_at => DateTime.new
+      :scraped_at => DateTime.now
     })
 
     respond_to do |format|
