@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     respond_to do |format|
-      format.html { @article }
+      format.html { render locals: { article: article }
       format.epub { send_data ebook_convert(:epub), filename: "#{@article.slug}.epub", type: "application/epub+zip" }
       format.mobi { send_data ebook_convert(:mobi), filename: "#{@article.slug}.mobi", type: "application/x-mobipocket-ebook" }
     end

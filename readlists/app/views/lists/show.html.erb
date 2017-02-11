@@ -1,19 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @list.title %>
-</p>
+<h1 class="chapter"><%= @list.title %></h1>
 
 <p>
-  <strong>Description:</strong>
   <%= @list.description %>
 </p>
 
-<p>
-  <strong>Author:</strong>
-  <%= @list.author %>
-</p>
+<em>Curated by <%= @list.author %></em>
+
+
+<% @list.articles.each do |article| %>
+  <%= render template: 'articles/show', locals: { article: article } %>
+<% end %>
 
 <%= link_to 'Edit', edit_list_path(@list) %> |
 <%= link_to 'Back', lists_path %>
