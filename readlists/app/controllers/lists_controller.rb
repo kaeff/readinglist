@@ -10,6 +10,11 @@ class ListsController < ApplicationController
   # GET /lists/1
   # GET /lists/1.json
   def show
+    respond_to do |format|
+      format.html { render locals: { list: @list } }
+      format.epub { send_ebook({ list: @list }, :epub, "#{@list.slug}.epub") }
+      format.mobi { send_ebook({ list: @list }, :mobi, "#{@list.slug}.mobi") }
+    end
   end
 
   # GET /lists/new

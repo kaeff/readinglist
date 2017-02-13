@@ -1,5 +1,4 @@
 require 'json'
-require 'net/http/post/multipart'
 
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
@@ -14,9 +13,9 @@ class ArticlesController < ApplicationController
   # GET /articles/1.json
   def show
     respond_to do |format|
-      format.html { render locals: { article: article }
-      format.epub { send_ebook(@article, :epub, filename: "#{@article.slug}.epub" }
-      format.mobi { send_ebook(@article, :mobi, filename: "#{@article.slug}.mobi" }
+      format.html { render locals: { article: @article } }
+      format.epub { send_ebook({ article: @article }, :epub, "#{@article.slug}.epub") }
+      format.mobi { send_ebook({ article: @article }, :mobi, "#{@article.slug}.mobi") }
     end
   end
 
